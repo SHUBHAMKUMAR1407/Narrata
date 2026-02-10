@@ -6,6 +6,7 @@ import { ApiResponse } from '../utils/ApiResponse.js';
 import { User } from '../models/user.model.js';
 import { LeaderboardEntry } from '../models/leaderboard.model.js';
 import { uploadOnCloudinary, deleteFromCloudinary, extractPublicId } from '../utils/cloudinary.js';
+import sendEmail from '../utils/sendEmail.js';
 
 const generateAccessAndRefreshTokens = async (userId) => {
   try {
@@ -313,17 +314,18 @@ const forgotPassword = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email: email.toLowerCase() });
 
   if (!user) {
+    // To prevent email enumeration, we could return 200 even if user not found, 
+    // but for better UX in this app we'll return 404
     throw new ApiError(404, 'User with this email does not exist');
   }
 
   const resetToken = user.generatePasswordResetToken();
   await user.save({ validateBeforeSave: false });
 
-  // In a real application, you would send this token via email
-  // For now, we'll just return it (remove this in production)
+  // Direct response for user request (bypassing email)
   return res
     .status(200)
-    .json(new ApiResponse(200, { resetToken }, 'Password reset token generated. Check your email.'));
+    .json(new ApiResponse(200, { resetToken }, 'Password reset token generated'));
 });
 
 // Reset password
@@ -334,32 +336,26 @@ const resetPassword = asyncHandler(async (req, res) => {
     throw new ApiError(400, 'Token and new password are required');
   }
 
-  try {
-    const decoded = jwt.verify(token, process.env.JWT_SECRET + 'temp'); // This needs to be improved
-    
-    const user = await User.findById(decoded._id).select('+passwordResetToken +passwordResetExpires');
+  // Get user by token and check expiry
+  const user = await User.findOne({
+    passwordResetToken: token,
+    passwordResetExpires: { $gt: Date.now() }
+  }).select('+password'); // Need password to update it
 
-    if (!user || user.passwordResetToken !== token) {
-      throw new ApiError(400, 'Invalid or expired reset token');
-    }
-
-    if (Date.now() > user.passwordResetExpires) {
-      throw new ApiError(400, 'Reset token has expired');
-    }
-
-    user.password = newPassword;
-    user.passwordResetToken = undefined;
-    user.passwordResetExpires = undefined;
-    
-    await user.save();
-
-    return res
-      .status(200)
-      .json(new ApiResponse(200, {}, 'Password reset successfully'));
-      
-  } catch (error) {
+  if (!user) {
     throw new ApiError(400, 'Invalid or expired reset token');
   }
+
+  user.password = newPassword;
+  user.passwordResetToken = undefined;
+  user.passwordResetExpires = undefined;
+
+  await user.save();
+
+  // Log user in directly after reset (optional) or just return success
+  return res
+    .status(200)
+    .json(new ApiResponse(200, {}, 'Password reset successfully'));
 });
 
 export {
