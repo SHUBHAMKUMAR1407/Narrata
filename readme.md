@@ -243,7 +243,7 @@ npm run lint       # Run ESLint
 - JWT-based authentication with refresh tokens
 - Protected routes with role-based access
 - Email verification support
-- Password reset functionality
+- Password reset functionality (Streamlined Single-Page Flow)
 
 ### Story Management
 - Rich text content support
