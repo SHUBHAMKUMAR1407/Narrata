@@ -13,15 +13,15 @@ import {
   getStoryCategories,
   getRelatedStories
 } from '../controllers/story.controller.js';
-import { 
-  verifyJWT, 
-  verifyOptionalJWT, 
-  requireEmailVerification 
+import {
+  verifyJWT,
+  verifyOptionalJWT,
+  requireEmailVerification
 } from '../middlewares/auth.middleware.js';
-import { 
-  uploadCoverImage, 
-  handleMulterError, 
-  cleanupFiles 
+import {
+  uploadCoverImage,
+  handleMulterError,
+  cleanupFiles
 } from '../middlewares/multer.middleware.js';
 
 const router = Router();
@@ -30,8 +30,8 @@ const router = Router();
 router.route('/').get(verifyOptionalJWT, getAllStories);
 router.route('/trending').get(getTrendingStories);
 router.route('/categories').get(getStoryCategories);
+router.route('/related/:storyId').get(getRelatedStories);
 router.route('/:slug').get(verifyOptionalJWT, getStoryBySlug);
-router.route('/:storyId/related').get(getRelatedStories);
 
 // Protected routes - Create story
 router.route('/create').post(

@@ -10,6 +10,10 @@ import Profile from './pages/Profile';
 import WriteStory from './pages/WriteStory';
 import Login from './pages/Login';
 import Signup from './pages/Signup';
+import About from './pages/About';
+import Contact from './pages/Contact';
+import Privacy from './pages/Privacy';
+import Terms from './pages/Terms';
 
 function App() {
   return (
@@ -25,9 +29,13 @@ function App() {
               <Route path="/leaderboard" element={<Leaderboard />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/write" element={<WriteStory />} />
-               <Route path="/edit-story/:slug" element={<WriteStory />} />
+              <Route path="/edit-story/:slug" element={<WriteStory />} />
               <Route path="/login" element={<Login />} />
               <Route path="/signup" element={<Signup />} />
+              <Route path="/about" element={<About />} />
+              <Route path="/contact" element={<Contact />} />
+              <Route path="/privacy" element={<Privacy />} />
+              <Route path="/terms" element={<Terms />} />
             </Routes>
           </main>
           <Footer />

@@ -147,7 +147,7 @@ function Profile() {
       try {
         const lsUser = JSON.parse(localStorage.getItem('user') || '{}');
         localStorage.setItem('user', JSON.stringify({ ...lsUser, ...updatedUser }));
-      } catch (_) {}
+      } catch (_) { }
       setIsEditing(false);
     } catch (err) {
       setEditError(err?.message || 'Failed to update profile.');
@@ -221,7 +221,7 @@ function Profile() {
       try {
         const lsUser = JSON.parse(localStorage.getItem('user') || '{}');
         localStorage.setItem('user', JSON.stringify({ ...lsUser, ...updatedUser }));
-      } catch (_) {}
+      } catch (_) { }
 
       // Clear local preview and input
       if (avatarPreview) URL.revokeObjectURL(avatarPreview);
@@ -250,16 +250,19 @@ function Profile() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
       {/* PROFILE CARD */}
-      <div className="bg-white rounded-lg shadow-lg p-6 mb-8">
+      <div className="bg-white rounded-2xl shadow-xl shadow-teal-500/10 p-8 mb-8 border border-teal-100 relative overflow-hidden">
+        {/* Decorative background element */}
+        <div className="absolute top-0 left-0 w-full h-32 bg-gradient-to-r from-teal-50 to-white/0 -z-0"></div>
+
         {isEditing ? (
           // ----- EDIT MODE (form only here) -----
-          <form onSubmit={handleSave}>
+          <form onSubmit={handleSave} className="relative z-10">
             <div className="flex flex-col sm:flex-row items-start">
               {/* Avatar block with upload controls */}
               <div className="flex flex-col items-center sm:items-start">
-                <div className="w-32 h-32 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 text-4xl font-bold mb-3 overflow-hidden relative group">
+                <div className="w-32 h-32 bg-teal-50 rounded-full flex items-center justify-center text-premium-gold text-4xl font-bold mb-6 overflow-hidden relative group border-4 border-white shadow-lg">
                   {avatarPreview ? (
                     <img src={avatarPreview} alt="New avatar preview" className="w-full h-full object-cover" />
                   ) : user.avatar ? (
@@ -278,10 +281,10 @@ function Profile() {
                   disabled={avatarUploading}
                 />
 
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col gap-3 w-full">
                   <button
                     type="button"
-                    className="btn-secondary"
+                    className="px-4 py-2 text-sm font-bold text-premium-gold border-2 border-premium-gold rounded-full hover:bg-teal-50 transition-colors w-full"
                     onClick={onPickAvatarClick}
                     disabled={avatarUploading}
                   >
@@ -289,24 +292,24 @@ function Profile() {
                   </button>
 
                   {avatarPreview && (
-                    <>
+                    <div className="flex gap-2">
                       <button
                         type="button"
-                        className="btn-primary"
+                        className="flex-1 btn-primary text-xs py-2"
                         onClick={handleAvatarUpload}
                         disabled={avatarUploading}
                       >
-                        {avatarUploading ? 'Uploading...' : 'Upload'}
+                        {avatarUploading ? '...' : 'Upload'}
                       </button>
                       <button
                         type="button"
-                        className="btn-tertiary"
+                        className="flex-1 px-3 py-2 text-xs font-bold text-gray-500 hover:text-red-500 transition-colors"
                         onClick={handleAvatarCancel}
                         disabled={avatarUploading}
                       >
                         Cancel
                       </button>
-                    </>
+                    </div>
                   )}
                 </div>
 
@@ -315,8 +318,8 @@ function Profile() {
                 )}
               </div>
 
-              <div className="sm:ml-8 w-full text-left mt-4 sm:mt-0">
-                <div className="space-y-4">
+              <div className="sm:ml-12 w-full text-left mt-8 sm:mt-0">
+                <div className="space-y-6">
                   <ProfileInput
                     label="Full Name"
                     name="fullName"
@@ -325,63 +328,70 @@ function Profile() {
                     placeholder="Your full name"
                   />
                   <div>
-                    <label htmlFor="bio" className="block text-sm font-medium text-gray-700">
+                    <label htmlFor="bio" className="block text-sm font-medium text-premium-text mb-1">
                       Bio
                     </label>
                     <textarea
                       id="bio"
                       name="bio"
                       rows={3}
-                      className="shadow-sm mt-1 block w-full sm:text-sm border border-gray-300 rounded-md"
+                      className="shadow-sm block w-full sm:text-sm border-teal-200 rounded-xl focus:ring-premium-gold focus:border-premium-gold bg-teal-50/30"
                       placeholder="A short bio about yourself"
                       value={formData.bio}
                       onChange={handleChange}
                     />
                   </div>
-                  <ProfileInput
-                    label="Location"
-                    name="location"
-                    value={formData.location}
-                    onChange={handleChange}
-                    placeholder="City, Country"
-                  />
-                  <ProfileInput
-                    label="Website"
-                    name="website"
-                    value={formData.website}
-                    onChange={handleChange}
-                    placeholder="https://your-website.com"
-                  />
-                  <h3 className="text-lg font-medium text-gray-900 pt-2">Social Links</h3>
-                  <ProfileInput
-                    label="Twitter URL"
-                    name="twitter"
-                    value={formData.socialLinks.twitter}
-                    onChange={handleSocialChange}
-                    placeholder="https://twitter.com/username"
-                  />
-                  <ProfileInput
-                    label="GitHub URL"
-                    name="github"
-                    value={formData.socialLinks.github}
-                    onChange={handleSocialChange}
-                    placeholder="https://github.com/username"
-                  />
-                  <ProfileInput
-                    label="LinkedIn URL"
-                    name="linkedin"
-                    value={formData.socialLinks.linkedin}
-                    onChange={handleSocialChange}
-                    placeholder="https://linkedin.com/in/username"
-                  />
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <ProfileInput
+                      label="Location"
+                      name="location"
+                      value={formData.location}
+                      onChange={handleChange}
+                      placeholder="City, Country"
+                    />
+                    <ProfileInput
+                      label="Website"
+                      name="website"
+                      value={formData.website}
+                      onChange={handleChange}
+                      placeholder="https://your-website.com"
+                    />
+                  </div>
+
+                  <div className="pt-4 border-t border-teal-50">
+                    <h3 className="text-sm font-bold text-premium-text uppercase tracking-wide mb-4">Social Links</h3>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+                      <ProfileInput
+                        label="Twitter"
+                        name="twitter"
+                        value={formData.socialLinks.twitter}
+                        onChange={handleSocialChange}
+                        placeholder="@username"
+                      />
+                      <ProfileInput
+                        label="GitHub"
+                        name="github"
+                        value={formData.socialLinks.github}
+                        onChange={handleSocialChange}
+                        placeholder="username"
+                      />
+                      <ProfileInput
+                        label="LinkedIn"
+                        name="linkedin"
+                        value={formData.socialLinks.linkedin}
+                        onChange={handleSocialChange}
+                        placeholder="username"
+                      />
+                    </div>
+                  </div>
                 </div>
               </div>
 
-              <div className="sm:ml-auto mt-6 sm:mt-0 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 self-start">
-                <button type="submit" className="btn-primary" disabled={isSubmitting || avatarUploading}>
-                  {isSubmitting ? 'Saving...' : 'Save'}
+              <div className="sm:ml-auto mt-8 sm:mt-0 flex flex-col gap-3 self-start min-w-[120px]">
+                <button type="submit" className="btn-primary w-full" disabled={isSubmitting || avatarUploading}>
+                  {isSubmitting ? 'Saving...' : 'Save Changes'}
                 </button>
-                <button type="button" onClick={handleEditToggle} className="btn-secondary" disabled={isSubmitting || avatarUploading}>
+                <button type="button" onClick={handleEditToggle} className="btn-secondary w-full text-center" disabled={isSubmitting || avatarUploading}>
                   Cancel
                 </button>
               </div>
@@ -391,8 +401,8 @@ function Profile() {
           </form>
         ) : (
           // ----- VIEW MODE (no form here) -----
-          <div className="flex flex-col sm:flex-row items-start">
-            <div className="w-32 h-32 bg-primary-100 rounded-full flex items-center justify-center text-primary-600 text-4xl font-bold mb-4 sm:mb-0 overflow-hidden relative group flex-shrink-0">
+          <div className="flex flex-col sm:flex-row items-start relative z-10">
+            <div className="w-32 h-32 bg-teal-50 rounded-full flex items-center justify-center text-premium-gold text-4xl font-bold mb-6 sm:mb-0 overflow-hidden relative group flex-shrink-0 border-4 border-white shadow-lg">
               {user.avatar ? (
                 <img src={user.avatar} alt={user.fullName} className="w-full h-full object-cover" />
               ) : (
@@ -400,32 +410,37 @@ function Profile() {
               )}
             </div>
 
-            <div className="sm:ml-8 w-full text-center sm:text-left">
-              <h1 className="text-2xl font-bold text-gray-900">{user.fullName}</h1>
-              <p className="text-gray-600 text-sm">@{user.username}</p>
-              <p className="text-gray-600 mt-2">{user.bio || 'No bio available'}</p>
+            <div className="sm:ml-12 w-full text-center sm:text-left">
+              <h1 className="text-3xl font-bold text-premium-text font-serif">{user.fullName}</h1>
+              <p className="text-premium-gold font-medium">@{user.username}</p>
+              <p className="text-premium-slate mt-4 max-w-2xl leading-relaxed">{user.bio || 'No bio available'}</p>
 
-              <div className="flex justify-center sm:justify-start space-x-8 mt-4">
+              <div className="flex flex-wrap gap-4 mt-6 text-sm text-premium-slate-text">
+                {user.location && <span className="flex items-center">📍 {user.location}</span>}
+                {user.website && <span className="flex items-center">🔗 <a href={user.website} target="_blank" rel="noopener noreferrer" className="hover:text-premium-gold transition-colors">{user.website.replace(/^https?:\/\//, '')}</a></span>}
+              </div>
+
+              <div className="flex justify-center sm:justify-start space-x-12 mt-8 py-6 border-y border-teal-50">
                 <div className="text-center">
-                  <div className="text-xl font-bold text-gray-900">{user.stats?.totalStories || 0}</div>
-                  <div className="text-sm text-gray-500">Stories</div>
+                  <div className="text-2xl font-bold text-premium-text font-serif">{user.stats?.totalStories || 0}</div>
+                  <div className="text-xs font-bold text-premium-slate uppercase tracking-wider mt-1">Stories</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-xl font-bold text-gray-900">{user.stats?.followerCount || 0}</div>
-                  <div className="text-sm text-gray-500">Followers</div>
+                  <div className="text-2xl font-bold text-premium-text font-serif">{user.stats?.followerCount || 0}</div>
+                  <div className="text-xs font-bold text-premium-slate uppercase tracking-wider mt-1">Followers</div>
                 </div>
                 <div className="text-center">
-                  <div className="text-xl font-bold text-gray-900">{user.stats?.followingCount || 0}</div>
-                  <div className="text-sm text-gray-500">Following</div>
+                  <div className="text-2xl font-bold text-premium-text font-serif">{user.stats?.followingCount || 0}</div>
+                  <div className="text-xs font-bold text-premium-slate uppercase tracking-wider mt-1">Following</div>
                 </div>
               </div>
             </div>
 
-            <div className="sm:ml-auto mt-4 sm:mt-0 flex flex-col sm:flex-row space-y-2 sm:space-y-0 sm:space-x-2 self-start">
-              <button type="button" onClick={handleEditToggle} className="btn-primary">
+            <div className="sm:ml-auto mt-8 sm:mt-0 flex flex-col gap-3 self-start min-w-[140px]">
+              <button type="button" onClick={handleEditToggle} className="btn-primary w-full text-sm">
                 Edit Profile
               </button>
-              <button type="button" onClick={handleLogout} className="btn-secondary">
+              <button type="button" onClick={handleLogout} className="px-4 py-2 text-sm font-bold text-premium-slate hover:text-red-500 transition-colors">
                 Logout
               </button>
             </div>
@@ -434,61 +449,61 @@ function Profile() {
       </div>
 
       {/* STORIES LIST */}
-      <div className="bg-white rounded-lg shadow-lg p-6">
-        <div className="flex justify-between items-center mb-6">
-          <h2 className="text-xl font-bold text-gray-900">My Stories</h2>
-          <button className="btn-primary" type="button" onClick={() => navigate('/write')}>
-            Create New Story
+      <div className="bg-white rounded-2xl shadow-xl shadow-teal-500/10 p-8 border border-teal-100">
+        <div className="flex justify-between items-center mb-8 border-b border-teal-100 pb-4">
+          <h2 className="text-2xl font-bold text-premium-text font-serif">My Stories</h2>
+          <button className="btn-primary flex items-center gap-2" type="button" onClick={() => navigate('/write')}>
+            <span>+</span> Create New Story
           </button>
         </div>
 
         {error && (
-          <div className="bg-red-50 text-red-600 p-3 rounded-md text-center">{error}</div>
+          <div className="bg-red-50 text-red-600 p-4 rounded-xl text-center border border-red-100">{error}</div>
         )}
 
         {stories.length === 0 && !error ? (
-          <div className="text-center py-8">
-            <p className="text-gray-500">You haven't written any stories yet.</p>
+          <div className="text-center py-12 bg-teal-50/30 rounded-xl border border-teal-100 border-dashed">
+            <p className="text-premium-slate">You haven't written any stories yet.</p>
           </div>
         ) : (
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {stories.map((story) => (
-              <div key={story._id} className="border rounded-lg p-4 flex flex-col justify-between">
+              <div key={story._id} className="bg-white border border-teal-100 rounded-xl p-6 flex flex-col justify-between hover:shadow-lg hover:shadow-teal-500/5 transition-all group">
                 <div>
                   <div className="flex justify-between items-start mb-4">
                     <div>
-                      <h3 className="text-lg font-semibold text-gray-900">{story.title}</h3>
-                      <span className="inline-block bg-primary-100 text-primary-800 text-xs px-2 py-1 rounded-full mt-1">
+                      <h3 className="text-lg font-bold text-premium-text group-hover:text-premium-gold transition-colors font-serif">{story.title}</h3>
+                      <span className="inline-block bg-teal-50 text-premium-gold text-xs font-bold px-2 py-1 rounded-md mt-2 uppercase tracking-wide border border-teal-100">
                         {story.category}
                       </span>
                     </div>
-                    <span className="text-sm text-gray-500 capitalize">{story.status}</span>
+                    <span className={`text-xs font-bold uppercase tracking-wider px-2 py-1 rounded-full ${story.status === 'published' ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-600'}`}>{story.status}</span>
                   </div>
                 </div>
 
-                <div className="flex justify-between items-center mt-4">
+                <div className="flex justify-between items-center mt-6 pt-4 border-t border-teal-50">
                   <div className="flex items-center space-x-4">
-                    <div className="flex items-center">
-                      <span className="text-yellow-400">★</span>
-                      <span className="ml-1 text-sm text-gray-600">
+                    <div className="flex items-center bg-teal-50 px-2 py-1 rounded-full">
+                      <span className="text-yellow-400 text-xs">★</span>
+                      <span className="ml-1 text-xs font-bold text-premium-text">
                         {typeof story.rating === 'number' ? story.rating.toFixed(1) : '0.0'}
                       </span>
                     </div>
-                    <div className="text-sm text-gray-600">{story.stats?.views || 0} views</div>
+                    <div className="text-xs text-premium-slate">{story.stats?.views || 0} views</div>
                   </div>
 
-                  <div className="flex space-x-2">
+                  <div className="flex space-x-3">
                     <button
                       type="button"
                       onClick={() => navigate(`/edit-story/${story.slug}`)}
-                      className="text-primary-600 hover:text-primary-700 font-medium"
+                      className="text-premium-gold hover:text-premium-gold-dark font-bold text-sm transition-colors"
                     >
                       Edit
                     </button>
                     <button
                       type="button"
                       onClick={() => handleDeleteStory(story._id)}
-                      className="text-red-600 hover:text-red-700 font-medium"
+                      className="text-premium-slate hover:text-red-500 font-bold text-sm transition-colors"
                     >
                       Delete
                     </button>

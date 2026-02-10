@@ -4,16 +4,33 @@
 
 @layer base {
   body {
-    @apply bg-gray-50;
+    @apply bg-premium-dark text-premium-text font-sans antialiased;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    @apply font-serif text-premium-text;
   }
 }
 
 @layer components {
   .btn-primary {
-    @apply px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors;
+    @apply px-8 py-3 bg-gold-gradient text-white font-serif font-bold rounded-full shadow-lg shadow-teal-500/20 hover:shadow-teal-500/40 hover:-translate-y-0.5 transition-all uppercase tracking-wider border border-transparent;
   }
-  
+
+  .btn-secondary {
+    @apply px-8 py-3 border-2 border-premium-gold text-premium-gold font-serif font-bold rounded-full hover:bg-teal-50 transition-all uppercase tracking-wider;
+  }
+
   .card {
-    @apply bg-white rounded-lg shadow-md p-6;
+    @apply bg-white rounded-2xl border border-teal-100 shadow-sm hover:shadow-lg hover:shadow-teal-100/50 hover:border-teal-200 transition-all duration-300 p-8;
+  }
+
+  .text-gold {
+    @apply text-premium-gold;
   }
 }

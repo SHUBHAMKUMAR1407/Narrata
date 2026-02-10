@@ -14,7 +14,7 @@ import { app } from './app.js';
 
 app.set('trust proxy', 1);
 
-const PORT = process.env.PORT || 8000;
+const PORT = process.env.PORT || 8001;
 
 // Connect to database and start server
 connectDB()

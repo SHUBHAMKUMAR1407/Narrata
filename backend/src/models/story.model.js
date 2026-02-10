@@ -14,8 +14,7 @@ const storySchema = new Schema(
       type: String,
       unique: true,
       lowercase: true,
-      trim: true,
-      index: true
+      trim: true
     },
     content: {
       type: String,
@@ -34,14 +33,12 @@ const storySchema = new Schema(
     author: {
       type: Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
-      index: true
+      required: true
     },
     category: {
       type: String,
       enum: STORY_CATEGORIES,
-      required: [true, 'Story category is required'],
-      index: true
+      required: [true, 'Story category is required']
     },
     tags: [{
       type: String,
@@ -52,8 +49,7 @@ const storySchema = new Schema(
     status: {
       type: String,
       enum: Object.values(STORY_STATUS),
-      default: STORY_STATUS.DRAFT,
-      index: true
+      default: STORY_STATUS.DRAFT
     },
     // Story statistics
     stats: {
@@ -76,8 +72,7 @@ const storySchema = new Schema(
     // Publication details
     publishedAt: {
       type: Date,
-      default: null,
-      index: true
+      default: null
     },
     lastModifiedAt: {
       type: Date,
@@ -143,31 +138,31 @@ storySchema.virtual('rating').get(function () {
 
 // Virtual for engagement score
 storySchema.virtual('engagementScore').get(function () {
-  return this.stats.views * 0.1 + 
-         this.stats.likes * 2 + 
-         this.stats.comments * 3 + 
-         this.stats.shares * 5;
+  return this.stats.views * 0.1 +
+    this.stats.likes * 2 +
+    this.stats.comments * 3 +
+    this.stats.shares * 5;
 });
 
 // Generate slug before saving
 storySchema.pre('save', async function (next) {
   if (!this.isModified('title')) return next();
-  
+
   try {
     const baseSlug = this.title
       .toLowerCase()
       .replace(/[^a-z0-9]+/g, '-')
       .replace(/^-+|-+$/g, '');
-    
+
     let slug = baseSlug;
     let counter = 0;
-    
+
     // Check for existing slugs and increment counter if needed
     while (await this.constructor.findOne({ slug, _id: { $ne: this._id } })) {
       counter++;
       slug = `${baseSlug}-${counter}`;
     }
-    
+
     this.slug = slug;
     next();
   } catch (error) {
@@ -181,10 +176,10 @@ storySchema.pre('save', function (next) {
     // Calculate word count
     const words = this.content.trim().split(/\s+/);
     this.wordCount = words.length;
-    
+
     // Calculate read time (average 200 words per minute)
     this.stats.readTime = Math.ceil(this.wordCount / 200);
-    
+
     // Generate excerpt if not provided
     if (!this.excerpt) {
       const plainText = this.content.replace(/<[^>]*>/g, ''); // Remove HTML tags
@@ -223,7 +218,7 @@ storySchema.methods.incrementViews = function () {
 storySchema.methods.toggleLike = async function (userId) {
   const isLiked = this.likedBy.includes(userId);
   const isDisliked = this.dislikedBy.includes(userId);
-  
+
   if (isLiked) {
     // Remove like
     this.likedBy.pull(userId);
@@ -232,21 +227,21 @@ storySchema.methods.toggleLike = async function (userId) {
     // Add like
     this.likedBy.push(userId);
     this.stats.likes += 1;
-    
+
     // Remove dislike if exists
     if (isDisliked) {
       this.dislikedBy.pull(userId);
       this.stats.dislikes -= 1;
     }
   }
-  
+
   return this.save({ validateBeforeSave: false });
 };
 
 storySchema.methods.toggleDislike = async function (userId) {
   const isLiked = this.likedBy.includes(userId);
   const isDisliked = this.dislikedBy.includes(userId);
-  
+
   if (isDisliked) {
     // Remove dislike
     this.dislikedBy.pull(userId);
@@ -255,14 +250,14 @@ storySchema.methods.toggleDislike = async function (userId) {
     // Add dislike
     this.dislikedBy.push(userId);
     this.stats.dislikes += 1;
-    
+
     // Remove like if exists
     if (isLiked) {
       this.likedBy.pull(userId);
       this.stats.likes -= 1;
     }
   }
-  
+
   return this.save({ validateBeforeSave: false });
 };
 

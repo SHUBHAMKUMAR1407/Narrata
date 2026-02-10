@@ -11,7 +11,6 @@ const userSchema = new Schema(
       unique: true,
       lowercase: true,
       trim: true,
-      index: true,
       minLength: [3, 'Username must be at least 3 characters long'],
       maxLength: [30, 'Username cannot exceed 30 characters'],
       match: [/^[a-zA-Z0-9_]+$/, 'Username can only contain letters, numbers, and underscores']
@@ -48,7 +47,7 @@ const userSchema = new Schema(
       type: String,
       maxLength: [200, 'Website URL cannot exceed 200 characters'],
       validate: {
-        validator: function(v) {
+        validator: function (v) {
           if (!v) return true; // Allow empty string
           return /^https?:\/\/.+/.test(v);
         },
@@ -96,13 +95,13 @@ const userSchema = new Schema(
       default: true
     },
     followers: [{
-     type: Schema.Types.ObjectId,
-     ref: 'User'
-   }],
-   following: [{
-     type: Schema.Types.ObjectId,
-     ref: 'User'
-   }],
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }],
+    following: [{
+      type: Schema.Types.ObjectId,
+      ref: 'User'
+    }],
     // Social links
     socialLinks: {
       twitter: { type: String, default: '' },
@@ -154,7 +153,7 @@ userSchema.virtual('stories', {
 // Hash password before saving
 userSchema.pre('save', async function (next) {
   if (!this.isModified('password')) return next();
-  
+
   try {
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
@@ -206,10 +205,10 @@ userSchema.methods.generatePasswordResetToken = function () {
     process.env.JWT_SECRET + this.password,
     { expiresIn: '10m' }
   );
-  
+
   this.passwordResetToken = resetToken;
   this.passwordResetExpires = Date.now() + 10 * 60 * 1000; // 10 minutes
-  
+
   return resetToken;
 };
 

@@ -46,120 +46,138 @@ function Home() {
   ];
 
   return (
-    <div>
+    <div className="bg-classic-cream min-h-screen">
       {/* Hero Section */}
-      <div className="bg-gradient-to-b from-primary-50 to-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="text-center">
-            <motion.h1 
-              className="text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl"
+      <div className="relative overflow-hidden">
+        {/* Background Pattern */}
+        <div className="absolute inset-0 z-0 opacity-5" style={{ backgroundImage: 'radial-gradient(#1A202C 1px, transparent 1px)', backgroundSize: '20px 20px' }}></div>
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 md:py-32 relative z-10">
+          <div className="text-center max-w-4xl mx-auto">
+            <motion.div
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5 }}
+              transition={{ duration: 0.6 }}
             >
-              <span className="block">Transform Your Stories</span>
-              <span className="block text-primary-600">Into Screen Magic</span>
-            </motion.h1>
-            <motion.p 
-              className="mt-3 max-w-md mx-auto text-base text-gray-500 sm:text-lg md:mt-5 md:text-xl md:max-w-3xl"
+              <h1 className="text-5xl md:text-7xl font-serif font-bold text-premium-text mb-6 tracking-tight leading-tight">
+                Transform Your Stories <br />
+                <span className="text-transparent bg-clip-text bg-gold-gradient italic">Into Screen Magic</span>
+              </h1>
+            </motion.div>
+
+            <motion.div
               initial={{ opacity: 0 }}
               animate={{ opacity: 1 }}
-              transition={{ delay: 0.2 }}
+              transition={{ delay: 0.3, duration: 0.6 }}
             >
-              Share your stories, get discovered by the industry, and turn your narratives into visual entertainment.
-            </motion.p>
-            <div className="mt-5 max-w-md mx-auto sm:flex sm:justify-center md:mt-8">
-              <div className="rounded-md shadow">
-                <Link
-                  to="/write"
-                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 md:py-4 md:text-lg md:px-10"
-                >
-                  Start Writing
-                </Link>
-              </div>
-              <div className="mt-3 rounded-md shadow sm:mt-0 sm:ml-3">
-                <Link
-                  to="/stories"
-                  className="w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-600 bg-white hover:bg-gray-50 md:py-4 md:text-lg md:px-10"
-                >
-                  Browse Stories
-                </Link>
-              </div>
-            </div>
+              <div className="w-24 h-1 bg-classic-gold mx-auto mb-8"></div>
+              <p className="mt-4 text-xl text-classic-slate max-w-2xl mx-auto leading-relaxed font-light">
+                Share your stories, get discovered by the industry, and turn your narratives into visual entertainment.
+              </p>
+            </motion.div>
+
+            <motion.div
+              className="mt-10 flex flex-col sm:flex-row gap-4 justify-center items-center"
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: 0.5, duration: 0.5 }}
+            >
+              <Link
+                to="/write"
+                className="btn-primary w-full sm:w-auto"
+              >
+                Start Writing
+              </Link>
+              <Link
+                to="/stories"
+                className="btn-secondary w-full sm:w-auto"
+              >
+                Browse Stories
+              </Link>
+            </motion.div>
           </div>
         </div>
       </div>
+
       {/* Features Section */}
-<div className="py-16 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center">
-            <h2 className="text-3xl font-extrabold text-gray-900">Why Choose Narrata?</h2>
+      <div className="py-24 bg-white relative">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+          <div className="text-center mb-20">
+            <h2 className="text-4xl font-bold font-serif text-premium-text mb-4">Why Choose Narrata?</h2>
+            <div className="w-24 h-1 bg-gold-gradient mx-auto rounded-full"></div>
           </div>
-          <div className="mt-10">
-            <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
-              <div className="card">
-                <div className="text-primary-600 text-2xl mb-4">📝</div>
-                <h3 className="text-lg font-medium text-gray-900">Share Your Stories</h3>
-                <p className="mt-2 text-gray-500">Write and share your stories with a global audience of readers and industry professionals.</p>
-              </div>
-              <div className="card">
-                <div className="text-primary-600 text-2xl mb-4">🏆</div>
-                <h3 className="text-lg font-medium text-gray-900">Get Recognized</h3>
-                <p className="mt-2 text-gray-500">Climb the leaderboard and get featured on our platform as top storytellers.</p>
-              </div>
-              <div className="card">
-                <div className="text-primary-600 text-2xl mb-4">🎬</div>
-                <h3 className="text-lg font-medium text-gray-900">Industry Connection</h3>
-                <p className="mt-2 text-gray-500">Connect with production houses and turn your stories into visual entertainment.</p>
-              </div>
+
+          <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-3">
+            <div className="card group">
+              <div className="text-4xl mb-6 bg-teal-50 w-16 h-16 rounded-xl flex items-center justify-center text-premium-gold shadow-sm group-hover:scale-110 group-hover:bg-teal-100 transition-all duration-300">📝</div>
+              <h3 className="text-xl font-bold text-premium-text font-serif mb-3">Share Your Stories</h3>
+              <p className="text-premium-slate leading-relaxed">Write and share your stories with a global audience of readers and industry professionals.</p>
+            </div>
+
+            <div className="card group">
+              <div className="text-4xl mb-6 bg-teal-50 w-16 h-16 rounded-xl flex items-center justify-center text-premium-gold shadow-sm group-hover:scale-110 group-hover:bg-teal-100 transition-all duration-300">🏆</div>
+              <h3 className="text-xl font-bold text-premium-text font-serif mb-3">Get Recognized</h3>
+              <p className="text-premium-slate leading-relaxed">Climb the leaderboard and get featured on our platform as top storytellers.</p>
+            </div>
+
+            <div className="card group">
+              <div className="text-4xl mb-6 bg-teal-50 w-16 h-16 rounded-xl flex items-center justify-center text-premium-gold shadow-sm group-hover:scale-110 group-hover:bg-teal-100 transition-all duration-300">🎬</div>
+              <h3 className="text-xl font-bold text-premium-text font-serif mb-3">Industry Connection</h3>
+              <p className="text-premium-slate leading-relaxed">Connect with production houses and turn your stories into visual entertainment.</p>
             </div>
           </div>
         </div>
       </div>
+
       {/* Featured Writers Section */}
-      <div className="py-16 bg-white">
+      <div className="py-20 bg-classic-cream">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-900">Featured Writers</h2>
-            <p className="mt-4 text-lg text-gray-500">Meet our most accomplished storytellers</p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold font-serif text-classic-navy mb-4">Featured Writers</h2>
+            <div className="w-16 h-1 bg-classic-gold mx-auto mb-4"></div>
+            <p className="text-lg text-classic-slate">Meet our most accomplished storytellers</p>
           </div>
+
           <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
             {featuredWriters.map((writer) => (
-              <div key={writer.id} className="bg-white rounded-lg shadow-lg overflow-hidden transition-transform hover:scale-105">
-                <div className="p-6 text-center">
-                  <div className="mx-auto w-32 h-32 mb-4">
+              <div key={writer.id} className="bg-white rounded-sm shadow-md overflow-hidden hover:shadow-xl transition-all duration-300 border border-gray-100">
+                <div className="p-8 text-center">
+                  <div className="mx-auto w-32 h-32 mb-6">
                     <img
                       src={writer.image}
                       alt={writer.name}
-                      className="w-full h-full rounded-full object-cover ring-4 ring-primary-100 shadow-lg"
+                      className="w-full h-full rounded-full object-cover ring-4 ring-classic-cream shadow-md"
                     />
                   </div>
-                  <div className="flex flex-wrap gap-2 justify-center mb-4">
+
+                  <div className="flex flex-wrap gap-2 justify-center mb-6">
                     {writer.achievements.map((achievement, index) => (
                       <span
                         key={index}
-                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-yellow-100 text-yellow-800 shadow-sm"
+                        className="inline-flex items-center px-3 py-1 rounded-full text-xs font-bold tracking-wide uppercase bg-classic-navy text-classic-gold"
                       >
                         {achievement}
                       </span>
                     ))}
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">{writer.name}</h3>
-                  <p className="mt-2 text-gray-600">{writer.bio}</p>
-                  <div className="mt-6 p-4 bg-gray-50 rounded-lg">
-                    <h4 className="font-semibold text-gray-900">{writer.story.title}</h4>
-                    <p className="mt-1 text-sm text-gray-600 line-clamp-2">{writer.story.excerpt}</p>
-                    <div className="mt-2 flex items-center justify-between">
+
+                  <h3 className="text-2xl font-bold text-classic-navy font-serif mb-2">{writer.name}</h3>
+                  <p className="text-classic-slate italic mb-6 text-sm">{writer.bio}</p>
+
+                  <div className="mt-6 p-6 bg-classic-cream rounded-sm border border-gray-100 text-left">
+                    <h4 className="font-bold text-classic-navy font-serif text-lg mb-2">{writer.story.title}</h4>
+                    <p className="text-sm text-gray-600 line-clamp-2 mb-4 font-serif">{writer.story.excerpt}</p>
+                    <div className="flex items-center justify-between border-t border-gray-200 pt-3">
                       <div className="flex items-center">
-                        <span className="text-yellow-400">★</span>
-                        <span className="ml-1 text-sm text-gray-600">{writer.story.rating}</span>
-                        <span className="ml-1 text-sm text-gray-400">({writer.story.votes} votes)</span>
+                        <span className="text-classic-gold">★</span>
+                        <span className="ml-1 text-sm font-bold text-classic-navy">{writer.story.rating}</span>
+                        <span className="ml-1 text-xs text-gray-500">({writer.story.votes})</span>
                       </div>
                       <Link
                         to={`/story/${writer.id}`}
-                        className="text-sm text-primary-600 hover:text-primary-700"
+                        className="text-sm font-bold text-classic-navy hover:text-classic-gold transition-colors uppercase tracking-wide"
                       >
-                        Read More →
+                        Read →
                       </Link>
                     </div>
                   </div>
@@ -171,84 +189,92 @@ function Home() {
       </div>
 
       {/* Contact Section */}
-      <div className="py-16 bg-gray-50">
+      <div className="py-20 bg-white border-t border-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-extrabold text-gray-900">Contact Us</h2>
-            <p className="mt-4 text-lg text-gray-500">Have questions? We'd love to hear from you.</p>
+          <div className="text-center mb-16">
+            <h2 className="text-4xl font-bold font-serif text-classic-navy mb-4">Contact Us</h2>
+            <div className="w-16 h-1 bg-classic-gold mx-auto mb-4"></div>
+            <p className="text-lg text-classic-slate">Have questions? We'd love to hear from you.</p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-white rounded-lg shadow-lg p-6">
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-12">
+            <div className="card bg-classic-cream border-none">
               <form className="space-y-6">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="name" className="block text-sm font-bold text-classic-navy uppercase tracking-wide">
                     Name
                   </label>
                   <input
                     type="text"
                     id="name"
                     name="name"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    className="mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-classic-navy focus:ring-classic-navy bg-white p-3"
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="email" className="block text-sm font-bold text-classic-navy uppercase tracking-wide">
                     Email
                   </label>
                   <input
                     type="email"
                     id="email"
                     name="email"
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    className="mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-classic-navy focus:ring-classic-navy bg-white p-3"
                   />
                 </div>
                 <div>
-                  <label htmlFor="message" className="block text-sm font-medium text-gray-700">
+                  <label htmlFor="message" className="block text-sm font-bold text-classic-navy uppercase tracking-wide">
                     Message
                   </label>
                   <textarea
                     id="message"
                     name="message"
                     rows={4}
-                    className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-primary-500 focus:ring-primary-500"
+                    className="mt-1 block w-full rounded-sm border-gray-300 shadow-sm focus:border-classic-navy focus:ring-classic-navy bg-white p-3"
                   />
                 </div>
                 <div>
                   <button
                     type="submit"
-                    className="w-full flex justify-center py-2 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+                    className="w-full btn-primary"
                   >
                     Send Message
                   </button>
                 </div>
               </form>
             </div>
-            <div className="bg-white rounded-lg shadow-lg p-6">
-              <div className="space-y-8">
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">Get in Touch</h3>
-                  <div className="space-y-4">
-                    <div className="flex items-center">
-                      <EnvelopeIcon className="h-6 w-6 text-primary-600" />
-                      <span className="ml-3 text-gray-600">contact@storytoscreen.com</span>
+
+            <div className="flex flex-col justify-center space-y-8 p-8">
+              <div>
+                <h3 className="text-2xl font-bold text-classic-navy font-serif mb-6">Get in Touch</h3>
+                <div className="space-y-6">
+                  <div className="flex items-center group">
+                    <div className="w-10 h-10 rounded-full bg-classic-cream flex items-center justify-center text-classic-navy group-hover:bg-classic-navy group-hover:text-classic-gold transition-colors">
+                      <EnvelopeIcon className="h-5 w-5" />
                     </div>
-                    <div className="flex items-center">
-                      <PhoneIcon className="h-6 w-6 text-primary-600" />
-                      <span className="ml-3 text-gray-600">+1 (555) 123-4567</span>
+                    <span className="ml-4 text-classic-slate text-lg">contact@storytoscreen.com</span>
+                  </div>
+                  <div className="flex items-center group">
+                    <div className="w-10 h-10 rounded-full bg-classic-cream flex items-center justify-center text-classic-navy group-hover:bg-classic-navy group-hover:text-classic-gold transition-colors">
+                      <PhoneIcon className="h-5 w-5" />
                     </div>
-                    <div className="flex items-center">
-                      <MapPinIcon className="h-6 w-6 text-primary-600" />
-                      <span className="ml-3 text-gray-600">123 Story Street, Creative City, ST 12345</span>
+                    <span className="ml-4 text-classic-slate text-lg">+1 (555) 123-4567</span>
+                  </div>
+                  <div className="flex items-center group">
+                    <div className="w-10 h-10 rounded-full bg-classic-cream flex items-center justify-center text-classic-navy group-hover:bg-classic-navy group-hover:text-classic-gold transition-colors">
+                      <MapPinIcon className="h-5 w-5" />
                     </div>
+                    <span className="ml-4 text-classic-slate text-lg">123 Story Street, Creative City, ST 12345</span>
                   </div>
                 </div>
-                <div>
-                  <h3 className="text-lg font-medium text-gray-900 mb-4">Office Hours</h3>
-                  <div className="text-gray-600">
-                    <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
-                    <p>Saturday: 10:00 AM - 4:00 PM</p>
-                    <p>Sunday: Closed</p>
-                  </div>
+              </div>
+
+              <div className="pt-8 border-t border-gray-200">
+                <h3 className="text-xl font-bold text-classic-navy font-serif mb-4">Office Hours</h3>
+                <div className="text-classic-slate space-y-2">
+                  <p>Monday - Friday: 9:00 AM - 6:00 PM</p>
+                  <p>Saturday: 10:00 AM - 4:00 PM</p>
+                  <p>Sunday: Closed</p>
                 </div>
               </div>
             </div>
